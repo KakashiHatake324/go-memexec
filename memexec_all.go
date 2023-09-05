@@ -5,10 +5,9 @@ package memexec
 
 import (
 	"fmt"
-	"internal/testlog"
 	"os"
+	"path/filepath"
 	"runtime"
-	"syscall"
 )
 
 func open(b []byte, name string) (*os.File, error) {
@@ -16,10 +15,11 @@ func open(b []byte, name string) (*os.File, error) {
 	if runtime.GOOS == "windows" {
 		pattern = fmt.Sprintf("%s.exe", name)
 	}
-	if file, err := os.Stat(fmt.Sprintf("%s/%s", tempDir(), pattern)); err == nil {
+
+	if file, err := os.Stat(filepath.Join(tempDir(), pattern)); err == nil {
 		os.Remove(file.Name())
 	}
-	f, err := os.Create(fmt.Sprintf("%s/%s", tempDir(), pattern))
+	f, err := os.Create(filepath.Join(tempDir(), pattern))
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,8 @@ func clean(f *os.File) error {
 }
 
 func tempDir() string {
-	dir := Getenv("TMPDIR")
+	os.TempDir()
+	dir := os.TempDir()
 	if dir == "" {
 		if runtime.GOOS == "android" {
 			dir = "/data/local/tmp"
@@ -54,10 +55,4 @@ func tempDir() string {
 		}
 	}
 	return dir
-}
-
-func Getenv(key string) string {
-	testlog.Getenv(key)
-	v, _ := syscall.Getenv(key)
-	return v
 }
