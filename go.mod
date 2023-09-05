@@ -1,4 +1,4 @@
-module github.com/amenzhinsky/go-memexec
+module github.com/KakashiHatake324/go-memexec
 
 go 1.19
 

@@ -30,7 +30,7 @@ func TestCommand_Shell(t *testing.T) {
 		return
 	}
 
-	exe, err := New([]byte("#!/bin/sh\necho hello"))
+	exe, err := New("test", []byte("#!/bin/sh\necho hello"))
 	if err != nil {
 		panic(err)
 	}
@@ -103,7 +103,7 @@ func newExec(t testing.TB, name string) *Exec {
 		t.Fatal(err)
 	}
 
-	exe, err := New(b)
+	exe, err := New(name, b)
 	if err != nil {
 		t.Fatal(err)
 	}

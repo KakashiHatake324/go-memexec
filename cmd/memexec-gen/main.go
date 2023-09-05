@@ -111,7 +111,7 @@ func run(bin string) error {
 	out(`	"os/exec"`)
 	out(`	"path/filepath"`)
 	out()
-	out(`	"github.com/amenzhinsky/go-memexec"`)
+	out(`	"github.com/KakashiHatake324/go-memexec"`)
 	out(")")
 	out()
 

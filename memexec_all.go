@@ -4,16 +4,22 @@
 package memexec
 
 import (
+	"fmt"
+	"internal/testlog"
 	"os"
 	"runtime"
+	"syscall"
 )
 
-func open(b []byte) (*os.File, error) {
-	pattern := "go-memexec-"
+func open(b []byte, name string) (*os.File, error) {
+	pattern := name
 	if runtime.GOOS == "windows" {
-		pattern = "go-memexec-*.exe"
+		pattern = fmt.Sprintf("%s.exe", name)
 	}
-	f, err := os.CreateTemp("", pattern)
+	if file, err := os.Stat(fmt.Sprintf("%s/%s", tempDir(), pattern)); err == nil {
+		os.Remove(file.Name())
+	}
+	f, err := os.Create(fmt.Sprintf("%s/%s", tempDir(), pattern))
 	if err != nil {
 		return nil, err
 	}
@@ -36,4 +42,22 @@ func open(b []byte) (*os.File, error) {
 
 func clean(f *os.File) error {
 	return os.Remove(f.Name())
+}
+
+func tempDir() string {
+	dir := Getenv("TMPDIR")
+	if dir == "" {
+		if runtime.GOOS == "android" {
+			dir = "/data/local/tmp"
+		} else {
+			dir = "/tmp"
+		}
+	}
+	return dir
+}
+
+func Getenv(key string) string {
+	testlog.Getenv(key)
+	v, _ := syscall.Getenv(key)
+	return v
 }

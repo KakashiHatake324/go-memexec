@@ -12,7 +12,7 @@ Running static binaries is quite simple, it's only needed to embed it into the a
 import (
 	_ "embed"
 	
-	"github.com/amenzhinsky/go-memexec"
+	"github.com/KakashiHatake324/go-memexec"
 )
 
 // go:embed path-to-binary
@@ -39,7 +39,7 @@ The dynamic linker must be the same on both building and running machines since 
 The following script helps generating packages, say `python3`:
 
 ```sh
-go install github.com/amenzhinsky/go-memexec/cmd/memexec-gen@latest
+go install github.com/KakashiHatake324/go-memexec/cmd/memexec-gen@latest
 PATH=$(go env GOPATH)/bin:$PATH memexec-gen /usr/bin/python3
 ```
 

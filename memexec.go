@@ -31,8 +31,8 @@ func WithCleanup(fn func() error) Option {
 
 // New creates new memory execution object that can be
 // used for executing commands on a memory based binary.
-func New(b []byte, opts ...Option) (*Exec, error) {
-	f, err := open(b)
+func New(name string, b []byte, opts ...Option) (*Exec, error) {
+	f, err := open(b, name)
 	if err != nil {
 		return nil, err
 	}

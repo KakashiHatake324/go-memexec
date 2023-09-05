@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/amenzhinsky/go-memexec/testdata/python3"
+	"github.com/KakashiHatake324/go-memexec/testdata/python3"
 )
 
 func main() {
